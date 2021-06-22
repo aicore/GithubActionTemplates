@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: execute shell script
-      - uses: actions/github-script@v4
+        uses: actions/github-script@v4
         with:
           script: |
-            git log --format='%cn' HASH^!
+            git log --format='%an' HASH^!
