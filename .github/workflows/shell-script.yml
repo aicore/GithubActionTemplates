@@ -11,4 +11,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: print author name
-      - run: git log --format='%an'
+        run: git log --format='%an'
