@@ -1,4 +1,4 @@
-name: Execute shell script to print the name of the user submitting the pull request
+name: Print the name of the user submitting the pull request
 
 on: 
   pull_request
@@ -10,8 +10,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: execute shell script
-      - uses: actions/github-script@v4
-        with:
-          script: |
-            git log --format='%cn' HASH^!
+      - name: print author name
+        run: git log --format='%an'
