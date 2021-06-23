@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: print username
+        run: git log --format='%an'
       - name: print pull request details
-        run: |
-         git log --format='%an'
-         git shortlog -s -n
+        run: git shortlog -s -n
