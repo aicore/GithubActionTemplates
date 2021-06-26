@@ -18,7 +18,7 @@
 This is a template repository that helps in Github Actions.
 
 ## Project Status
-* Not Active.
+* Active.
 
 # Getting Started
 * see https://github.com/aicore/GithubActionTemplates/blob/main/README.md
