@@ -22,10 +22,14 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
+          COMMITS_URL: ${{ toJSON(github.event.pull_request._links.commits) }}
         run: | 
           mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
           cat ./.tmp/github.json
+          curl "$COMMITS_URL" -o "./.tmp/commitDetails.json"
+          echo "commit details: "
+          cat ./.tmp/commitDetails.json
       - name: Get pull request details
         run: |
           pip install PyGithub
