@@ -25,7 +25,12 @@ is_git_dir = subprocess.check_output(
         ['/usr/bin/git', 'rev-parse', '--is-inside-work-tree']).decode('utf-8')
 print("Is git dir: ", is_git_dir)
 
-# 
+# git status
+git_status = subprocess.check_output(
+        ['/usr/bin/git', 'status']).decode('utf-8')
+print("Git status: ", git_status)
+
+# last n commits
 last_n_commit_list = subprocess.check_output(
         ['/usr/bin/git', 'rev-list', '--max-count=10', 'HEAD']).decode('utf-8')
 print("last 10 commit ids are: ", last_n_commit_list)
