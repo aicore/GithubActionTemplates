@@ -24,6 +24,9 @@ print("Number of commits in the pull request: ", len(commit_details))
 commit_logins = []
 commit_id_list = []
 files_updated = []
+is_git_dir = subprocess.check_output(
+        ['/usr/bin/git', 'rev-parse', '--is-inside-work-tree']).decode('utf-8')
+print("is git dir: ", is_git_dir)
 for commit in commit_details:
     commiter_github_login = commit['committer']['login']
     if commiter_github_login not in commit_logins:
