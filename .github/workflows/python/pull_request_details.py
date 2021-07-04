@@ -54,6 +54,7 @@ for commit in commit_details:
                 files_updated.append(file)
     except subprocess.CalledProcessError as e:
         print("Exception on process, rc=", e.returncode, "output=", e.output)
+        sys.exit(1)
 
 print("All github users who made changes to the pull request: ", commit_logins)
 print("All commit ids in pull request: ", commit_id_list)
