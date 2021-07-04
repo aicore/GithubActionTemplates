@@ -33,7 +33,7 @@ for commit in commit_details:
     commit_id_list.append(commit_id)
 
     files = subprocess.check_output(
-        ['git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_id]).decode('utf-8').splitlines()
+        ['/usr/bin/git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_id]).decode('utf-8').splitlines()
     for file in files:
         if file not in files_updated:
             files_updated.append(file)
