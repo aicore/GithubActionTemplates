@@ -1,0 +1,41 @@
+name: Print all github contexts.
+# https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
+
+on: 
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: | 
+          mkdir ./tmp
+          echo "$GITHUB_CONTEXT" > ./tmp/github.json
+          cat ./tmp/github.json
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+
