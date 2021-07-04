@@ -19,6 +19,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Setting temp directory
+        run: | 
+          mkdir ./.tmp
       - name: Getting commit details
         uses: wei/wget@v1
         with:
@@ -27,7 +30,6 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: | 
-          mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
           cat ./.tmp/github.json
           echo "commit details: "
