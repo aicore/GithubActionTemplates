@@ -31,12 +31,14 @@ for commit in commit_details:
     
     commit_id = commit['sha']
     commit_id_list.append(commit_id)
-
-    files = subprocess.check_output(
+    try:
+        files = subprocess.check_output(
         ['/usr/bin/git', 'diff-tree', '--no-commit-id', '--name-only', '-r', commit_id]).decode('utf-8').splitlines()
-    for file in files:
-        if file not in files_updated:
-            files_updated.append(file)
+        for file in files:
+            if file not in files_updated:
+                files_updated.append(file)
+    except subprocess.CalledProcessError as e:
+        print("Exception on process, rc=", e.returncode, "output=", e.output)
 
 print("All github users who made changes to the pull request: ", commit_logins)
 print("All commit ids in pull request: ", commit_id_list)
