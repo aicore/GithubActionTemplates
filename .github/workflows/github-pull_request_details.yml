@@ -37,6 +37,7 @@ jobs:
       - name: Get pull request details
         run: |
           pip install PyGithub
+          which git
           if ! python ./.github/workflows/python/pull_request_details.py; then
               echo "Pull request details could not be extracted"
               exit 1
