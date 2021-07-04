@@ -1,7 +1,9 @@
 name: Print the name of the user submitting the pull request
 
 on: 
-  pull_request
+  pull_request:
+    branches:
+      - main
     
 jobs:
   print-user-name:
