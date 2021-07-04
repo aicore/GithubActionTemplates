@@ -29,7 +29,7 @@ jobs:
           cat ./.tmp/github.json
           echo "commit details from: "
           echo "$COMMITS_URL"
-          curl "$COMMITS_URL" -o "./.tmp/commitDetails.json"
+          wget "$COMMITS_URL" -o "./.tmp/commitDetails.json"
           cat ./.tmp/commitDetails.json
       - name: Get pull request details
         run: |
