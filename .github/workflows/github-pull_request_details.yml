@@ -1,0 +1,38 @@
+name: Print pull request details.
+# https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  one:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: | 
+          mkdir ./.tmp
+          echo "$GITHUB_CONTEXT" > ./.tmp/github.json
+          cat ./tmp/github.json
+      - name: Get pull request details
+        run: |
+          pwd
+          if ! python ./.github/workflows/python/pull_request_details.py; then
+              echo "Pull request details could not be extracted"
+              exit 1
+          else
+              echo "all good"
+          fi
+      
