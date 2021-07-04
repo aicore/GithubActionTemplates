@@ -1,4 +1,5 @@
-name: Raise issue if exe file encountered in commit
+name: Print all github contexts.
+# https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
 
 on: 
   pull_request:
@@ -13,7 +14,9 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: | 
+          echo "$GITHUB_CONTEXT" > ./tmp/github.json
+          cat ./tmp/github.json
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJSON(job) }}
