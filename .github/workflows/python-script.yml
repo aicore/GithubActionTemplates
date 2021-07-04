@@ -23,7 +23,7 @@ jobs:
       - name: test for .exe files and raise issue if .exe file found
         run: |
           pwd
-          if ! python test_no_exe_files.py; then
+          if ! python ./.github/workflows/python/test_no_exe_files.py; then
               echo "Please remove executable files"
               exit 1
           else
