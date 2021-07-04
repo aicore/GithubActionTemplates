@@ -27,8 +27,9 @@ jobs:
           mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
           cat ./.tmp/github.json
+          echo "commit details from: "
+          echo "$COMMITS_URL"
           curl "$COMMITS_URL" -o "./.tmp/commitDetails.json"
-          echo "commit details: "
           cat ./.tmp/commitDetails.json
       - name: Get pull request details
         run: |
