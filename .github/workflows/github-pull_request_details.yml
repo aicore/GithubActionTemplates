@@ -19,17 +19,18 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Getting commit details
+        uses: wei/wget@v1
+        with:
+          args: -O ./.tmp/commitDetails.json ${{ toJSON(github.event.pull_request._links.commits.href) }}
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
-          COMMITS_URL: ${{ toJSON(github.event.pull_request._links.commits.href) }}
         run: | 
           mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
           cat ./.tmp/github.json
-          echo "commit details from: "
-          echo "$COMMITS_URL"
-          wget "$COMMITS_URL" -O "./.tmp/commitDetails.json"
+          echo "commit details: "
           cat ./.tmp/commitDetails.json
       - name: Get pull request details
         run: |
