@@ -25,7 +25,7 @@ jobs:
         run: | 
           mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
-          cat ./tmp/github.json
+          cat ./.tmp/github.json
       - name: Get pull request details
         run: |
           pwd
