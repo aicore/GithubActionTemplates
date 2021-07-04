@@ -22,7 +22,7 @@ jobs:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
-          COMMITS_URL: ${{ toJSON(github.event.pull_request._links.commits) }}
+          COMMITS_URL: ${{ toJSON(github.event.pull_request._links.commits.href) }}
         run: | 
           mkdir ./.tmp
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
