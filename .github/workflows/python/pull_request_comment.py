@@ -14,7 +14,7 @@ github_details = json.load(github_info_file)
 commit_info_file = open('./.tmp/commitDetails.json', 'r') 
 commit_details = json.load(commit_info_file)
 
-if github_details["event_name"] != "pull_request":
+if github_details["event_name"] != "pull_request" or github_details["event_name"] != "pull_request_target":
     print("Error! This operation is valid on github pull requests. Exiting")
     sys.exit(1)
 
