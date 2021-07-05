@@ -15,9 +15,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: | 
-          mkdir ./tmp
-          echo "$GITHUB_CONTEXT" > ./tmp/github.json
-          cat ./tmp/github.json
+          mkdir ./.tmp
+          echo "$GITHUB_CONTEXT" > ./.tmp/github.json
+          cat ./.tmp/github.json
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJSON(job) }}
