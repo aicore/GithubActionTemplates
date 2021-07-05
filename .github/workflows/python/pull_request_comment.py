@@ -83,4 +83,4 @@ for comment in comments:
         break
 
 if not already_commented:
-    pr.create_issue_comment('Hello from github actions.')
+  pr.create_issue_comment('Hello from github actions.')
