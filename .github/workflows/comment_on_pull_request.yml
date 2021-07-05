@@ -36,7 +36,7 @@ jobs:
           cat ./.tmp/github.json
           echo "commit details: "
           cat ./.tmp/commitDetails.json
-      - name: Get pull request details
+      - name: Comment on pull request
         run: |
           pip install PyGithub
           which git
