@@ -1,0 +1,35 @@
+name: Raise issue if exe file encountered in commit
+
+on: 
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-exe-file:
+
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: test for .exe files and raise issue if .exe file found
+        run: |
+          pwd
+          if ! python ./.github/workflows/python/test_no_exe_files.py; then
+              echo "Please remove executable files"
+              exit 1
+          else
+              echo "all good"
+          fi
+
+
+
+            
