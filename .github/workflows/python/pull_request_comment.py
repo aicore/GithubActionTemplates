@@ -72,7 +72,15 @@ print("Pull Request number: ", pr_number)
 g = Github(github_token)
 repo = g.get_repo(github_repo)
 pr = repo.get_pull(pr_number)
-comments = pr.get_comments()
-print(comments)
 
-pr.create_issue_comment('Hello from github actions.')
+issue = repo.get_issue(pr_number)
+comments = issue.get_comments()
+COMMENT_STR = 'Hello from github actions.'
+already_commented = False
+for comment in comments:
+    if comment.user.login == 'github-actions[bot]' and comment.body == COMMENT_STR:
+        already_commented = True
+        break
+
+if not already_commented:
+    pr.create_issue_comment('Hello from github actions.')
