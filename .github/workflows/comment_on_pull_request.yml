@@ -2,6 +2,7 @@ name: Hello message on pull request.
 # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
 # the pull request target event provides RW token to github 
 # https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
+# pull_request_target is only raised when a pull request is raised from a fork
 
 on: 
   pull_request:
