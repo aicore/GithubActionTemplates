@@ -5,8 +5,8 @@ name: Hello message on pull request.
 # pull_request_target is only raised when a pull request is raised from a fork
 
 on: 
-  pull_request:
   pull_request_target:
+  pull_request:
     branches:
       - main
 
