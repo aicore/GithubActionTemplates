@@ -72,4 +72,7 @@ print("Pull Request number: ", pr_number)
 g = Github(github_token)
 repo = g.get_repo(github_repo)
 pr = repo.get_pull(pr_number)
+comments = pr.get_comments()
+print(comments)
+
 pr.create_issue_comment('Hello from github actions.')
