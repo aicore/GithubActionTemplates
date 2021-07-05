@@ -1,4 +1,4 @@
-name: Print pull request details.
+name: Hello message on pull request.
 # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
 
 on: 
@@ -36,10 +36,11 @@ jobs:
           cat ./.tmp/github.json
           echo "commit details: "
           cat ./.tmp/commitDetails.json
-      - name: Get pull request details
+      - name: Comment on pull request
         run: |
+          pip install PyGithub
           which git
-          if ! python ./.github/workflows/python/pull_request_details.py; then
+          if ! python ./.github/workflows/python/pull_request_comment.py; then
               echo "Pull request details could not be extracted"
               exit 1
           else
