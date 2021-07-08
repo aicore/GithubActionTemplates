@@ -2,10 +2,10 @@ name: Comment on pull request post procesing
 # depends on and only executes after pull_request_processor.yml is complete
 
 on: 
-    workflow_run:
-    workflows: ["Pull Request Processor"]
-    types:
-      - completed
+  workflow_run:
+  workflows: ["Pull Request Processor"]
+  types:
+    - completed
 
 jobs:
   one:
