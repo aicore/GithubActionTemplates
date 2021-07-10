@@ -2,6 +2,9 @@ import os
 import sys
 import json
 import subprocess
+from github import Github
+# we use pygithub https://pygithub.readthedocs.io/en/latest/index.html
+# alternatively use github3py https://github3py.readthedocs.io/
 
 print("current working directory is: ", os.getcwd())
 
@@ -11,8 +14,8 @@ github_details = json.load(github_info_file)
 commit_info_file = open('./.tmp/commitDetails.json', 'r') 
 commit_details = json.load(commit_info_file)
 
-if github_details["event_name"] != "pull_request":
-    print("Error! This operation is valid on github pull requests. Exiting")
+if github_details["event_name"] != "pull_request" and github_details["event_name"] != "pull_request_target":
+    print("Error! This operation is valid on github pull requests. Exiting. Event: ", github_details["event_name"])
     sys.exit(1)
 
 print("Pull request submitted by github login: ", github_details['event']['pull_request']['user']['login'])
@@ -58,3 +61,26 @@ print("All github users who made changes to the pull request: ", commit_logins)
 print("All commit ids in pull request: ", commit_id_list)
 print("All files updated in pull request: ", files_updated)
 
+
+github_token = github_details['token']
+github_repo = github_details['repository']
+pr_number = github_details['event']['number']
+
+print("Connecting to Github apis for repo: ", github_repo)
+print("Pull Request number: ", pr_number)
+
+g = Github(github_token)
+repo = g.get_repo(github_repo)
+pr = repo.get_pull(pr_number)
+
+issue = repo.get_issue(pr_number)
+comments = issue.get_comments()
+COMMENT_STR = 'Hello from github actions.'
+already_commented = False
+for comment in comments:
+    if comment.user.login == 'github-actions[bot]' and comment.body == COMMENT_STR:
+        already_commented = True
+        break
+
+if not already_commented:
+  pr.create_issue_comment('Hello from github actions.')

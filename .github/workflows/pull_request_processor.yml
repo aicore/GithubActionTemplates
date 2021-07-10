@@ -1,5 +1,12 @@
-name: Print pull request details.
+name: Pull Request Processor
 # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
+# The pull request target event provides RW token to github 
+# https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
+# But `on: pull_request_target` should be avoided due to security
+# reasons. Read more: [SEC_ADV_1] https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+# 
+# We will use a mix of github pull_request that does not provide any write access to pull requests on forks
+# and workflow event, as discussed in [SEC_ADV_1]
 
 on: 
   pull_request:
@@ -33,16 +40,12 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: | 
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
+          echo ${{ github.event.number }} > ./.tmp/PRNumber
           cat ./.tmp/github.json
           echo "commit details: "
           cat ./.tmp/commitDetails.json
-      - name: Get pull request details
-        run: |
-          which git
-          if ! python ./.github/workflows/python/pull_request_details.py; then
-              echo "Pull request details could not be extracted"
-              exit 1
-          else
-              echo "all good"
-          fi
+      - uses: actions/upload-artifact@v2
+        with:
+          name: prcontext
+          path: .tmp/
       
