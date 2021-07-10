@@ -44,6 +44,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
           ls
+          echo "GH context:"
           echo "$GITHUB_CONTEXT"
           
       
