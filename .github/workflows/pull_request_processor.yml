@@ -1,12 +1,15 @@
-name: Hello message on pull request.
+name: Pull Request Processor
 # https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context
-# the pull request target event provides RW token to github 
+# The pull request target event provides RW token to github 
 # https://github.blog/2020-08-03-github-actions-improvements-for-fork-and-pull-request-workflows/
-# pull_request_target is only raised when a pull request is raised from a fork
-# https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+# But `on: pull_request_target` should be avoided due to security
+# reasons. Read more: [SEC_ADV_1] https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+# 
+# We will use a mix of github pull_request that does not provide any write access to pull requests on forks
+# and workflow event, as discussed in [SEC_ADV_1]
 
 on: 
-  pull_request_target:
+  pull_request:
     branches:
       - main
 
@@ -40,14 +43,8 @@ jobs:
           cat ./.tmp/github.json
           echo "commit details: "
           cat ./.tmp/commitDetails.json
-      - name: Comment on pull request
-        run: |
-          pip install PyGithub
-          which git
-          if ! python ./.github/workflows/python/pull_request_comment.py; then
-              echo "Pull request details could not be extracted"
-              exit 1
-          else
-              echo "all good"
-          fi
+      - uses: actions/upload-artifact@v2
+        with:
+          name: prcontext
+          path: .tmp/
       
