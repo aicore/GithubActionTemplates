@@ -40,6 +40,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: | 
           echo "$GITHUB_CONTEXT" > ./.tmp/github.json
+          echo ${{ github.event.number }} > ./.tmp/PRNumber
           cat ./.tmp/github.json
           echo "commit details: "
           cat ./.tmp/commitDetails.json
