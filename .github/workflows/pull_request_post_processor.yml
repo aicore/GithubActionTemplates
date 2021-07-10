@@ -3,9 +3,9 @@ name: Comment on pull request post procesing
 
 on: 
   workflow_run:
-  workflows: ["Pull Request Processor"]
-  types:
-    - completed
+    workflows: ["Pull Request Processor"]
+    types:
+      - completed
 
 jobs:
   one:
@@ -40,7 +40,10 @@ jobs:
       - run: unzip pr.zip
 
       - name: Comment on pull request
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
           ls
+          echo "$GITHUB_CONTEXT"
           
       
