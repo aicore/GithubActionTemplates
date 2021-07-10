@@ -39,11 +39,25 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
 
-      - name: Comment on pull request
+      - name: Print github contexts
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: |
           ls
+          echo "GH context:"
           echo "$GITHUB_CONTEXT"
-          
+      
+      - name: 'Comment on PR'
+        uses: actions/github-script@v3
+        with:
+          github-token: github.token
+          script: |
+            var fs = require('fs');
+            var issue_number = Number(fs.readFileSync('./PRNumber'));
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: 'Everything is OK. Thank you for the PR!'
+            });
       
